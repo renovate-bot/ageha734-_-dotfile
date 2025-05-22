@@ -1,0 +1,142 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+format = """
+$directory\
+[](fg:#88C0D0 bg:#394260)\
+$git_branch\
+$git_status\
+[](fg:#394260)\
+$fill\
+[](fg:#212736)\
+$golang\
+$python\
+$rust\
+$java\
+$nodejs\
+$dart\
+$kotlin\
+$swift\
+[](fg:#1d2230 bg:#212736)\
+$time\
+[](fg:#88C0D0 bg:#1d2230)\
+$localip\
+\n$character
+"""
+
+[fill]
+symbol = ' '
+
+[character]
+success_symbol = '[■▶](bold white) '
+error_symbol = '[■■■▶](bold red) '
+vimcmd_symbol = '[V](bold green) '
+
+[localip]
+style = "fg:#2E3440 bg:#88C0D0 bold"
+format = '[ $localipv4 ]($style)'
+ssh_only = false
+disabled = false
+
+[directory]
+style = "fg:#2E3440 bg:#88C0D0 bold"
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+read_only = ' 󰌾 ' # nf-md-lock
+read_only_style = 'fg:#f7768e bg:#1a1b26'
+truncation_length = 2
+truncate_to_repo = false
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:#394260"
+format = '[[ $symbol $branch(:$remote_branch)](fg:#769ff0 bg:#394260)]($style)'
+
+[git_status]
+style = "bg:#394260"
+format = '[[( $all_status$ahead_behind)](fg:#769ff0 bg:#394260)]($style)'
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+conflicted = '=\($count\)'
+up_to_date = '✓'
+stashed = ' '
+staged = '++\($count\)'
+modified = '!\($count\)'
+untracked = '?\($count\)'
+renamed = '襁\($count\)'
+deleted = '✘\($count\)'
+
+[git_commit]
+commit_hash_length = 7
+tag_disabled = false
+only_detached = false
+
+[golang]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[python]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[rust]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[java]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[nodejs]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[dart]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[kotlin]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[swift]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+version_format = 'v${raw}'
+disabled = false
+
+[time]
+time_format = "%R"
+style = "bg:#1d2230"
+format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+disabled = false

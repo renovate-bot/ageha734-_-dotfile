@@ -1,0 +1,149 @@
+keybinds clear-defaults=true {
+    shared_except "normal" "locked" "search" "scroll" "renametab" "renamepane" {
+        bind "Enter" "Esc" { SwitchToMode "Normal"; }
+    }
+
+    shared_among "search" "scroll" {
+        bind "Esc" { ScrollToBottom; SwitchToMode "Normal"; }
+    }
+
+    shared {
+        bind "Ctrl t" { Detach; }
+        bind "Ctrl q" { CloseTab; SwitchToMode "Normal"; }
+        bind "Ctrl Shift q" { Quit; }
+    }
+
+    shared_except "entersearch" "locked" {
+        bind "Ctrl f" { SwitchToMode "EnterSearch"; SearchInput 0; }
+    }
+
+    shared_except "locked" "search" {
+        bind "Ctrl n" { NewPane "Right"; }
+        bind "Ctrl Shift n" { NewPane "Down"; }
+        bind "Ctrl r" { SwitchToMode "RenamePane"; PaneNameInput 0; }
+        bind "Ctrl b" { TogglePaneFrames; SwitchToMode "Normal"; }
+        bind "Ctrl m" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "Ctrl o" { ToggleFloatingPanes; }
+        bind "Ctrl w" { CloseFocus; SwitchToMode "Normal"; }
+
+        bind "Ctrl Shift Left" { MoveFocusOrTab "Left"; }
+        bind "Ctrl Shift Right" { MoveFocusOrTab "Right"; }
+        bind "Ctrl Shift Up" { MoveFocus "Up"; }
+        bind "Ctrl Shift Down" { MoveFocus "Down"; }
+
+        bind "Ctrl Alt Left" { Resize "Left"; }
+        bind "Ctrl Alt Right" { Resize "Right"; }
+        bind "Ctrl Alt Up" { Resize "Up"; }
+        bind "Ctrl Alt Down" { Resize "Down"; }
+
+        bind "Alt Shift Left" { MovePane "Left"; }
+        bind "Alt Shift Right" { MovePane "Right"; }
+        bind "Alt Shift Up" { MovePane "Up"; }
+        bind "Alt Shift Down" { MovePane "Down"; }
+
+        bind "Ctrl Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
+        bind "Ctrl Alt w" { CloseTab; SwitchToMode "Normal"; }
+        bind "Alt Left" { GoToPreviousTab; }
+        bind "Alt Right" { GoToNextTab; }
+        bind "Alt Shift Left" { MoveTab "Left"; }
+        bind "Alt Shift Right" { MoveTab "Right"; }
+    }
+
+    shared_except "locked" {
+        bind "Ctrl y" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
+                floating true
+                ignore_case true
+                quick_jump true
+            }
+        }
+
+        bind "Ctrl Up" { ScrollUp; }
+        bind "Ctrl Down" { ScrollDown; }
+        bind "Ctrl Shift Up" { HalfPageScrollUp; }
+        bind "Ctrl Shift Down" { HalfPageScrollDown; }
+        bind "Ctrl Shift Right" { PageScrollUp; }
+        bind "Ctrl Shift Left" { PageScrollDown; }
+    }
+
+    // Rest of the configuration remains the same as the original file
+    search {
+        bind "n" { Search "down"; }
+        bind "N" { Search "up"; }
+        bind "c" { SearchToggleOption "CaseSensitivity"; }
+        bind "w" { SearchToggleOption "Wrap"; }
+        bind "o" { SearchToggleOption "WholeWord"; }
+    }
+
+    entersearch {
+        bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Search"; SearchToggleOption "CaseSensitivity"; }
+    }
+
+    renametab {
+        bind "Enter" { SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
+    }
+
+    renamepane {
+        bind "Enter" { SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
+    }
+}
+
+load_plugins {
+    "file:~/.config/zellij/plugins/zjswitcher.wasm" {
+        programs_in_locked_mode "nvim"
+    }
+    "file:~/.config/zellij/plugins/zellij-foreman.wasm"
+    "file:~/.config/zellij/plugins/room.wasm"
+}
+
+plugins {
+    tab-bar location="zellij:tab-bar"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    compact-bar location="zellij:compact-bar"
+    session-manager location="zellij:session-manager"
+    welcome-screen location="zellij:session-manager" {
+        welcome_screen true
+    }
+    filepicker location="zellij:strider" {
+        cwd "/"
+    }
+}
+
+on_force_close "detach"
+pane_frames true
+
+themes {
+  tokyo-night {
+      fg 255 255 237
+      bg 0 0 0
+      black 0 0 0
+      red 249 51 87
+      green 158 206 106
+      yellow 224 175 104
+      blue 122 162 247
+      magenta 187 154 247
+      cyan 42 195 222
+      white 255 255 255
+      orange 255 158 100
+  }
+}
+theme "tokyo-night"
+
+default_layout "default"
+
+mouse_mode true
+scroll_buffer_size 100000
+
+copy_command "pbcopy"
+copy_clipboard "system"
+copy_on_select true
+
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}

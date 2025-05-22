@@ -1,0 +1,38 @@
+shell-integration = fish
+
+term = xterm-ghostty
+theme = "nord"
+
+font-family = "Hack Nerd Font Mono"
+font-feature = -dlig
+font-size = 10.5
+font-thicken = true
+
+macos-non-native-fullscreen = true
+macos-titlebar-style = hidden
+
+macos-icon = custom-style
+macos-icon-ghost-color = BCBEC4
+macos-icon-screen-color = 1E1F22
+
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 0.5
+
+window-decoration = true
+window-padding-x = 2
+window-padding-y = 2
+
+quick-terminal-position = "top"
+quick-terminal-screen = "main"
+quick-terminal-animation-duration = 0
+
+resize-overlay = never
+
+unfocused-split-opacity = 0.825
+
+keybind = "global:cmd+`=toggle_quick_terminal"
+keybind = cmd+opt+left=unbind
+keybind = cmd+opt+right=unbind
+
+initial-window = false
+confirm-close-surface = false

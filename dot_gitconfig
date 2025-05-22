@@ -1,0 +1,85 @@
+[user]
+	name = KEITA HIBI
+	email = hibi-keita@dmm.com
+	signingkey = "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGP++Om00B0nMNamAlEtwMaGG2jU+dczBkA2xSv9QJpDsM86pOnUU6SrydDnXGIlD8wkcRiCN8B3R2UIb2+No1Y= ecdsa-sha2-nistp256"
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	defaultKeyCommand = ssh-add -L
+[ghq]
+	root = /Users/hibi-keita/Repository
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+	sort = version:refname
+	gpgSign = true
+[init]
+	defaultBranch = master
+	templatedir = ~/.git-templates/git-secrets
+[diff]
+	tool = difftastic
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+    prompt = false
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    syntax-theme = Monokai Extended
+    navigate = true
+    line-numbers = true
+[interactive]
+    diffFilter = delta --color-only
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[pull]
+	rebase = true
+[merge]
+	conflictstyle = zdiff3
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+	gpgSign = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[core]
+	excludesfile = ~/.gitignore
+	fsmonitor = true
+	untrackedCache = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	allowed = AKIAIOSFODNN7EXAMPLE
+	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+	patterns = private_key
+	patterns = private_key_id

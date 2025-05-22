@@ -1,0 +1,260 @@
+after-login-command = []
+
+after-startup-command = ['exec-and-forget borders']
+
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+]
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+on-focus-changed = [
+    'move-mouse window-lazy-center',
+    'exec-and-forget /bin/bash -c /opt/homebrew/bin/sketchybar --trigger front_app_switched --trigger update_windows',
+]
+
+start-at-login = true
+
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+accordion-padding = 30
+
+default-root-container-layout = 'tiles'
+
+default-root-container-orientation = 'auto'
+
+key-mapping.preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 40
+inner.vertical = 40
+outer.left = 40
+outer.bottom = [{ monitor.'^built-in retina display$' = 20 }, 40]
+outer.right = 40
+outer.top = [{ monitor.'^built-in retina display$' = 27 }, 82]
+
+[mode.main.binding]
+alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+alt-f = 'fullscreen'
+alt-shift-f = 'macos-native-fullscreen'
+
+alt-s = 'layout v_accordion'
+alt-w = 'layout h_accordion'
+alt-e = 'layout tiles horizontal vertical'
+alt-g = 'split horizontal'
+alt-v = 'split vertical'
+
+alt-p = 'move-workspace-to-monitor --wrap-around next'
+alt-shift-p = [
+    'move-node-to-monitor --wrap-around next',
+    'focus-monitor next --wrap-around',
+]
+
+alt-1 = 'workspace --auto-back-and-forth 1'
+alt-2 = 'workspace --auto-back-and-forth 2' # Jobwork
+alt-3 = 'workspace --auto-back-and-forth 3'
+alt-4 = 'workspace --auto-back-and-forth 4'
+alt-t = 'workspace --auto-back-and-forth t'
+alt-m = 'workspace --auto-back-and-forth m'
+alt-n = 'workspace --auto-back-and-forth n'
+
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+
+alt-shift-s = [
+    'mode service',
+    'exec-and-forget sketchybar --trigger send_message MESSAGE="SERVICE MODE" HOLD="true"',
+]
+
+[mode.service.binding]
+esc = [
+    'reload-config',
+    'exec-and-forget sketchybar --trigger hide_message',
+    'exec-and-forget sketchybar --reload',
+    'mode main',
+]
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+#s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+
+s = [
+    'exec-and-forget cat ~/.config/aerospace/shrugstring| pbcopy',
+    'exec-and-forget sketchybar --trigger hide_message',
+    'mode main',
+]
+
+b = [
+    'exec-and-forget ~/.config/aerospace/presentation.sh on',
+    'exec-and-forget sketchybar --bar height=0',
+    'exec-and-forget sketchybar --trigger hide_message',
+    'mode main',
+]
+shift-b = [
+    'exec-and-forget ~/.config/aerospace/presentation.sh off',
+    'exec-and-forget sketchybar --bar height=36',
+    'exec-and-forget sketchybar --trigger hide_message',
+    'mode main',
+]
+
+backspace = ['close-all-windows-but-current', 'mode main']
+
+[mode.resize.binding]
+keypadMinus = 'resize smart -70'
+keypadPlus = 'resize smart +70'
+h = ['resize width -64']
+j = ['resize height -64']
+k = ['resize height +64']
+l = ['resize width +64']
+esc = ['mode main', 'exec-and-forget sketchybar --trigger hide_message']
+enter = ['mode main', 'exec-and-forget sketchybar --trigger hide_message']
+
+[mode.join.binding]
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+cmd-h = ['join-with left', 'mode main']
+cmd-alt-h = ['join-with left', 'mode main']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.cisco.anyconnect.macos.acsock'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.cisco.secureclient.gui'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.crowdstrike.falcon.App'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.jamf.connect'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'ai.krisp.krispMac'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'co.boomvision.boom.macos'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'io.rize'
+run = 'move-node-to-workspace 0'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.CompanyPortalMac'
+run = 'move-node-to-workspace 0'
+
+[[on-window-detected]]
+if.app-id = 'com.maxgoedjen.Secretive.Host'
+run = 'move-node-to-workspace 0'
+
+[[on-window-detected]]
+if.app-id = 'com.jamfsoftware.selfservice.mac'
+run = 'move-node-to-workspace 0'
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xcode'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.google.android.studio'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.figma.Desktop'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.docker.docker'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.jkiss.dbeaver.core.product'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.jgraph.drawio.desktop'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.proxyman.NSProxy'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.wireshark.Wireshark'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.wireshark.Stratoshark'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'so.amie.electron-app'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = 'move-node-to-workspace t'
