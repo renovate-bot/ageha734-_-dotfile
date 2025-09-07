@@ -14,19 +14,19 @@ on:
 jobs:
   run-test:
     runs-on: macos-latest
+
     permissions:
       contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
       - name: Initialize chezmoi
         run: |
           mkdir -p ~/.config/chezmoi
-          echo -e "[data]\n    email = \"github-actions[bot]@users.noreply.github.com\"" > ~/.config/chezmoi/chezmoi.toml
-
+          echo -e "[data]\n    email = \"github-actions[bot]@users.noreply.github.com\"\n    espanso = false" > ~/.config/chezmoi/chezmoi.toml
           sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/ageha734/dotfile.git
+
       - name: Install proto
         run: bash <(curl -fsSL https://moonrepo.dev/install/proto.sh)
 
