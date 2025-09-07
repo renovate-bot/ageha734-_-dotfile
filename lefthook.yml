@@ -1,0 +1,9 @@
+commit-msg:
+  jobs:
+    - run: commitlint lint {args}
+
+pre-commit:
+  parallel: true
+  jobs:
+    - run: dprint check {all_files}
+      glob: "*.{json,toml,yaml,yml}"
