@@ -27,3 +27,7 @@ signingkey = "ssh-ed25519 <>"
 user = ""
 EOF
 ```
+
+## Check Setup
+
+✅ **2025年08月01日** に動作確認済み
