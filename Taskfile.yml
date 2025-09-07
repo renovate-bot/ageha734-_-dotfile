@@ -74,38 +74,35 @@ tasks:
       - dprint fmt
 
   git:commit:
-    desc: AI-assisted commit with automatic message generation
-    interactive: true
+    desc: Generate a commit message with Copilot and commit
+    silent: true
     cmds:
       - git add .
       - |
-          # Show diff for context
-          echo "=== Changes to be committed ==="
-          git diff --cached --stat
-          echo ""
+          if ! git diff --staged --quiet; then
+            echo "📝 Generating a commit message with GitHub Copilot..."
 
-          # Generate commit message based on changes
-          if git diff --cached --name-only | grep -q "\.md$"; then
-            TYPE="docs"
-          elif git diff --cached --name-only | grep -q "Taskfile\|\.ya?ml$\|\.toml$"; then
-            TYPE="chore"
-          elif git diff --cached --name-only | grep -q "\.fish$\|\.sh$"; then
-            TYPE="feat"
+            DIFF=$(git diff --staged)
+            echo "🔍 Changes:"
+
+            PROMPT="""
+            Generate a git commit message for my changes. Follow the Conventional Commits specification strictly. The entire message must be a single line in the format: '<type>(<scope>): <subject>'.
+            The changes are: $DIFF
+            - The type must be one of: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert.
+            - The scope is optional.
+            - The subject must be in the imperative mood, start with a lowercase letter, and have no period at the end.
+            - Provide only the single-line commit message itself, without any introduction or explanation.
+            """
+
+            COMMIT_MSG=$(gh copilot suggest "$PROMPT")
+
+            echo "💬 Generated Message:"
+            echo "   $COMMIT_MSG"
+            git commit -m "$COMMIT_MSG"
+            echo "✅ Committed successfully!"
           else
-            TYPE="feat"
+            echo "🤷 No changes staged for commit."
           fi
-
-          # Get changed files for description
-          CHANGED_FILES=$(git diff --cached --name-only | head -3 | xargs basename -s .yml -s .yaml -s .toml -s .md -s .fish | tr '\n' ', ' | sed 's/,$//')
-
-          # Create commit message
-          COMMIT_MSG="$TYPE: update $CHANGED_FILES"
-
-          echo "Generated commit message: $COMMIT_MSG"
-          echo ""
-
-          # Commit with generated message
-          git commit -m "$COMMIT_MSG"
 
   git:log:
     desc: Show git log
