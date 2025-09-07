@@ -1,4 +1,12 @@
 # vim: ft=fish ts=4 sw=4 et
+set fish_greeting "" # Setting to empty string is more common than `set fish_greeting` alone
+
+# --- Fish Shell Configuration ---
+set -g theme_color_scheme terminal-dark
+set -g fish_prompt_pwd_dir_length 1
+set -g theme_display_user yes
+set -g theme_hide_hostname no
+set -g theme_hostname always
 
 # --- Core Settings & XDG ---
 set -gx LC_ALL "en_US.UTF-8"
@@ -11,8 +19,47 @@ set -g FISH_DATA_DIR $XDG_DATA_HOME/fish # Standard data directory
 set -g FISH_CACHE_DIR $HOME/.cache/fish
 
 # --- PATH Configuration (Order matters) ---
+# xcode command line tools path (macOS specific)
+fish_add_path --global (xcode-select -p)/usr/bin
+
+# Homebrew (macOS specific)
+set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile # For `brew bundle`
+set -gx HOMEBREW_NO_AUTO_UPDATE 1          # Speeds up brew commands
 fish_add_path --global /opt/homebrew/bin /opt/homebrew/sbin
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.authz/bin
+
+# --- SDKs & Dev Tools (Functions related to these are best in functions/ dir) ---
+# PATHs - set them globally if they don't change
+set -gx ANDROID_HOME $HOME/Library/Android/sdk
+fish_add_path $ANDROID_HOME/platform-tools $ANDROID_HOME/emulator
+
+# Flutter
+set -gx FLUTTER_HOME $HOME/.flutter
+fish_add_path $FLUTTER_HOME/bin
+
+# libxml2 (These are build flags, usually not needed for shell startup speed directly unless sourced scripts use them heavily)
+set -gx LDFLAGS "-L/opt/homebrew/opt/libxml2/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/libxml2/include"
+set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/libxml2/lib/pkgconfig" # Use fish_add_path for PKG_CONFIG_PATH if it's a list
+fish_add_path --prepend /opt/homebrew/opt/libxml2/bin # if it has binaries you use directly
+
+# Node.js
+set -gx NPM_CONFIG_PREFIX $HOME/.node_modules
+fish_add_path $NPM_CONFIG_PREFIX/bin
+
+# Python
+if not set -q __my_python_version
+    # Try to get version, redirect stderr to avoid clutter if python3 isn't there
+    set -g __my_python_version (python3 --version 2>/dev/null | string match -r '\d+\.\d+' | head -n 1)
+end
+
+if test -n "$__my_python_version"
+    set -gx PYTHONUSERBASE $HOME/.python
+    set -gx PYTHONVERSION $__my_python_version
+    set -gx PYTHONPATH $PYTHONUSERBASE/lib/python$PYTHONVERSION/site-packages
+    fish_add_path $PYTHONUSERBASE/bin # Add to global path once
+end
 
 # Rustup & Cargo
 set -gx RUSTUP_HOME $HOME/.rustup
@@ -23,61 +70,41 @@ fish_add_path $CARGO_HOME/bin
 set -gx GOPATH $HOME/.go
 fish_add_path $GOPATH/bin
 
-# Python
-if not set -q __my_python_version
-    # Try to get version, redirect stderr to avoid clutter if python3 isn't there
-    set -g __my_python_version (python3 --version 2>/dev/null | string match -r '\d+\.\d+' | head -n 1)
-end
-if test -n "$__my_python_version"
-    set -gx PYTHONUSERBASE $HOME/.python
-    set -gx PYTHONVERSION $__my_python_version
-    set -gx PYTHONPATH $PYTHONUSERBASE/lib/python$PYTHONVERSION/site-packages
-    fish_add_path --global $PYTHONUSERBASE/bin # Add to global path once
-else
-    echo "Warning: Python version for PYTHONUSERBASE could not be determined." >&2
-end
+# TiCloud
+fish_add_path $HOME/.ticloud/bin
+fish_add_path $HOME/.tiup/bin
 
-# --- SDKs & Dev Tools (Functions related to these are best in functions/ dir) ---
-# Android, iOS, Flutter PATHs - set them globally if they don't change
-set -gx ANDROID_HOME $HOME/Library/Android/sdk
-fish_add_path $ANDROID_HOME/platform-tools $ANDROID_HOME/emulator
+# Mysql Client
+fish_add_path /opt/homebrew/opt/mysql-client/bin
 
-# Flutter
-set -gx FLUTTER_HOME $HOME/.flutter
-fish_add_path $FLUTTER_HOME/bin
+# Sqlite
+fish_add_path /opt/homebrew/opt/sqlite/bin
 
-# --- Homebrew ---
-set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile # For `brew bundle`
-set -gx HOMEBREW_NO_AUTO_UPDATE 1          # Speeds up brew commands
+# Nix
+fish_add_path $HOME/.nix-profile/bin
 
 # --- Misc Tools & Configs ---
 set -gx LESSKEY $HOME/.config/less/less
 
-# libxml2 (These are build flags, usually not needed for shell startup speed directly unless sourced scripts use them heavily)
-set -gx LDFLAGS "-L/opt/homebrew/opt/libxml2/lib"
-set -gx CPPFLAGS "-I/opt/homebrew/opt/libxml2/include"
-set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/libxml2/lib/pkgconfig" # Use fish_add_path for PKG_CONFIG_PATH if it's a list
-fish_add_path --prepend /opt/homebrew/opt/libxml2/bin # if it has binaries you use directly
+# --- Shell Behavior Tweaks ---
+set -U __done_min_cmd_duration 5000  # Universal var, set once
+set -U fish_features qmark-noglob     # Universal var, set once
+
+# --- SSH Agent ---
+set -gx SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 
 # --- Config Caching for Expensive Initializations ---
 set -l USER_CONFIG_FILE $FISH_CONFIG_DIR/config.fish # Main config file
 set -l CACHED_INIT_SCRIPT $FISH_CACHE_DIR/cached_fish_init.fish # Specific name for this cache
 
+#
+
 # Regenerate cache if main config changes, or if cache file doesn't exist
-if not test -f "$CACHED_INIT_SCRIPT" \
-   || test "$USER_CONFIG_FILE" -nt "$CACHED_INIT_SCRIPT"
-    # Add other files to check if their change should trigger re-caching e.g. Brewfile:
-    # || test "$HOMEBREW_BUNDLE_FILE" -nt "$CACHED_INIT_SCRIPT"
+if not test -f "$CACHED_INIT_SCRIPT" || test "$USER_CONFIG_FILE" -nt "$CACHED_INIT_SCRIPT"
 
     mkdir -p "$FISH_CACHE_DIR"
     # Start fresh
     echo "# Auto-generated by $USER_CONFIG_FILE on "(date) > "$CACHED_INIT_SCRIPT"
-    echo "" >> "$CACHED_INIT_SCRIPT"
-
-    # xcode command line tools path (macOS specific)
-    if type -q xcode-select
-        echo "fish_add_path --global (xcode-select -p)/usr/bin" >> "$CACHED_INIT_SCRIPT"
-    end
 
     # direnv hook
     if type -q direnv
@@ -91,6 +118,20 @@ if not test -f "$CACHED_INIT_SCRIPT" \
         echo "atuin init fish --disable-up-arrow | source" >> "$CACHED_INIT_SCRIPT"
     end
 
+    # github copilot for cli
+    if type -q gh
+        if test -f ~/.local/share/gh/extensions/gh-fish/gh-copilot-alias.fish
+            echo "source ~/.local/share/gh/extensions/gh-fish/gh-copilot-alias.fish" >> "$CACHED_INIT_SCRIPT"
+        end
+    end
+
+    # source GCloud SDK path (this is fine)
+    if type -q gcloud
+        if test -f "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
+            source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc" >> "$CACHED_INIT_SCRIPT"
+        end
+    end
+
     # starship prompt
     if type -q starship
         # Modern starship init should handle transience.
@@ -98,19 +139,6 @@ if not test -f "$CACHED_INIT_SCRIPT" \
     end
 
     set_color green --bold; echo "Fish: Cached initialization script updated at $CACHED_INIT_SCRIPT"; set_color normal
-end
-
-# Source the cached initializations if the file exists
-if test -f "$CACHED_INIT_SCRIPT"
-    source "$CACHED_INIT_SCRIPT"
-else
-    echo "Warning: Fish cached init script not found: $CACHED_INIT_SCRIPT" >&2
-end
-
-# --- Key Bindings (Define after Atuin init if ATUIN_NOBIND is true) ---
-if type -q atuin
-    bind \ch _atuin_search # Ctrl+H for Atuin search (example, from original)
-    bind -M insert \ch _atuin_search
 end
 
 # --- Interactive Shell Setup ---
@@ -134,47 +162,26 @@ if status is-interactive
         proto activate fish | source
     end
 
-    # Clear default greeting
-    set fish_greeting "" # Setting to empty string is more common than `set fish_greeting` alone
-    enable_transience
-end
+    # --- Tmux Configuration & Auto-Launch ---
+    # Check if our Terminal emulator is Ghostty
+    if [ "$TERM" = "xterm-ghostty" ]
+        set -l log_file "$HOME/.cache/ghostty.log"
 
-# --- Shell Behavior Tweaks ---
-set -U __done_min_cmd_duration 5000  # Universal var, set once
-set -U fish_features qmark-noglob     # Universal var, set once
-
-# --- SSH Agent ---
-set -gx SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-
-# --- Zellij Configuration & Auto-Launch ---
-set -gx ZELLIJ_CONFIG_DIR "$HOME/.config/zellij"
-# Use universal variables for persistent preferences, set them once via command line
-# e.g., `set -U ZELLIJ_AUTO_ATTACH true`. Remove from config.fish if using -U.
-# If set here with -gx, they are session-specific unless exported by parent.
-# For this example, we keep them as global for the session, as in your original.
-set -gx ZELLIJ_AUTO_ATTACH true
-set -gx ZELLIJ_AUTO_EXIT true
-
-# Ghosttyターミナルで、かつZellijセッション内にいない場合にZellijを自動起動
-if status is-interactive; and test "$TERM" = "xterm-ghostty"; and not set -q ZELLIJ_SESSION_INFO
-    set -l zellij_layout_file "$ZELLIJ_CONFIG_DIR/layouts/default.kdl"
-
-    if test "$ZELLIJ_AUTO_EXIT" = "true"
-        if test "$ZELLIJ_AUTO_ATTACH" = "true"
-            zellij --layout "$zellij_layout_file" attach --index 0
-            # zellij --layout "$zellij_layout_file" attach --index 0 || zellij
-        end
-    else
-        # Zellij終了時にfishを終了させない場合
-        if test "$ZELLIJ_AUTO_ATTACH" = "true"
-            kill $fish_pid
+        if [ ! -n "$TMUX" ]
+            tmux new-session; exit # Changed '&&' to ';'
+            tmux pipe-pane "cat >> $log_file"
         end
     end
-end
 
-# source GCloud SDK path (this is fine)
-if test -f "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
-    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
+    # Source the cached initializations if the file exists
+    if test -f "$CACHED_INIT_SCRIPT"
+        source "$CACHED_INIT_SCRIPT"
+    else
+        echo "Warning: Fish cached init script not found: $CACHED_INIT_SCRIPT" >&2
+    end
+
+    # Clear default greeting
+    enable_transience
 end
 
 # Bat
@@ -227,4 +234,15 @@ if type -q nvim
 end
 
 # Atuin
-balias history 'atuin history list --format "{time} - {duration} - {command}"'
+if type -q atuin
+    # Ensure Atuin is initialized properly
+    atuin init fish --disable-up-arrow | source
+    set -gx ATUIN_NOBIND "true" # Disable default binds if using custom ones
+    # Custom Atuin commands
+    bind \ch _atuin_search
+    bind -M insert \ch _atuin_search
+    balias history _atuin_search
+    balias search 'atuin search'
+    balias add 'atuin add'
+    balias clear 'atuin clear'
+end

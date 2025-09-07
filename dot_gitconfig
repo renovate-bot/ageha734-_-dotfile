@@ -1,17 +1,20 @@
-[user]
-	name = KEITA HIBI
-	email = hibi-keita@dmm.com
-	signingkey = "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGP++Om00B0nMNamAlEtwMaGG2jU+dczBkA2xSv9QJpDsM86pOnUU6SrydDnXGIlD8wkcRiCN8B3R2UIb2+No1Y= ecdsa-sha2-nistp256"
+[include]
+	path = ~/.config/delta/delta-themes.gitconfig
+[include]
+	path = ~/.gitalias
+[include]
+	path = ~/.gitconfig.user
 [gpg]
 	format = ssh
 [gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 	defaultKeyCommand = ssh-add -L
 [ghq]
-	root = /Users/hibi-keita/Repository
+	root = ~/Repository
 [column]
-    ui = auto
+	ui = auto
 [branch]
-    sort = -committerdate
+	sort = -committerdate
 [tag]
 	sort = version:refname
 	gpgSign = true
@@ -25,20 +28,23 @@
 	mnemonicPrefix = true
 	renames = true
 [difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
+	cmd = difft "$LOCAL" "$REMOTE"
 [difftool]
-    prompt = false
+	prompt = false
 [pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
 [delta]
-    plus-style = "syntax #012800"
-    minus-style = "syntax #340001"
-    syntax-theme = Monokai Extended
-    navigate = true
-    line-numbers = true
+	features = side-by-side line-numbers decorations
+	whitespace-error-style = 22 reverse
+	theme = catppuccin-mocha
+	navigate = true
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
 [interactive]
     diffFilter = delta --color-only
 [push]
@@ -62,9 +68,13 @@
 	enabled = true
 	autoupdate = true
 [core]
+	pager = delta
 	excludesfile = ~/.gitignore
 	fsmonitor = true
 	untrackedCache = true
+	whitespace = cr-at-eol
+	quotepath = false
+	editor = nvim
 [rebase]
 	autoSquash = true
 	autoStash = true
@@ -74,6 +84,12 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[credential]
+	helper = cache
+[credential "https://github.com"]
+	helper = gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = gh auth git-credential
 [secrets]
 	providers = git secrets --aws-provider
 	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
@@ -81,3 +97,5 @@
 	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
 	patterns = private_key
 	patterns = private_key_id
+[alias]
+	tree = log --all --graph --pretty=format:'%x09%C(auto) %h %Cgreen %ar %Creset%x09by "%C(cyan ul)%an%Creset" %x09%C(auto)%s %d'

@@ -1,1 +1,26 @@
+# tmux
+.config/tmux/*
+!.config/tmux/tmux.conf
+
+# gh
+.config/gh/*
+!.config/gh/config.yml
+
+# git
+.gitconfig_user
+
+# base
+**/.DS_Store
+.keep
+.cursor
+.github
+.vscode
+.clinerules
+.prototools
+config
+dprint.json
+lefthook.yml
 README.md
+{{- if not .espanso }}
+Library/Preferences/espanso
+{{- end }}

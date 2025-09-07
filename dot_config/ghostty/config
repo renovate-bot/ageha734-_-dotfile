@@ -1,7 +1,10 @@
 shell-integration = fish
 
 term = xterm-ghostty
-theme = "nord"
+theme = catppuccin-frappe
+
+background-opacity = 0.7
+background-blur-radius = 20
 
 font-family = "Hack Nerd Font Mono"
 font-feature = -dlig
@@ -11,9 +14,7 @@ font-thicken = true
 macos-non-native-fullscreen = true
 macos-titlebar-style = hidden
 
-macos-icon = custom-style
-macos-icon-ghost-color = BCBEC4
-macos-icon-screen-color = 1E1F22
+macos-icon = glass
 
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 0.5
@@ -30,9 +31,20 @@ resize-overlay = never
 
 unfocused-split-opacity = 0.825
 
-keybind = "global:cmd+`=toggle_quick_terminal"
-keybind = cmd+opt+left=unbind
-keybind = cmd+opt+right=unbind
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+keybind = ctrl+b=previous_tab
+keybind = ctrl+n=next_tab
+keybind = ctrl+shift+b=move_tab:-1
+keybind = ctrl+shift+n=move_tab:+1
+
+keybind = ctrl+;=new_split:up
+keybind = ctrl+'=new_split:right
+
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+l=goto_split:right
 
 initial-window = false
 confirm-close-surface = false

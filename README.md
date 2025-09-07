@@ -1,33 +1,29 @@
 # dotfile
 
-Kawamataryo's dotfiles managed by [chezmoi](https://www.chezmoi.io/).
-
 ## Get started
 
-#### 1. Install chezmoi
+### 1. Clone dotfile
 
-```
-brew install chezmoi
-```
-
-#### 2. Clone dotfile
-
-```
-chezmoi init https://github.com/hibi-keita-dmm/dotfile.git
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/ageha734/dotfile.git
 ```
 
-#### 3. Login to 1password cli
+### 2. Setup proto
 
-```
-# On bash
-eval $(op my.1password.com メールアドレス)
-
-# On fish with fish-replay
-replay 'eval $(op my.1password.com メールアドレス)'
+```bash
+bash <(curl -fsSL https://moonrepo.dev/install/proto.sh)
 ```
 
-#### 4. Apply dotfiles
+### 3. Git Setup
 
-```
-chezmoi apply
+```bash
+cat << 'EOF' > ~/.gitconfig.user
+[user]
+name = ""
+email = ""
+signingkey = "ssh-ed25519 <>"
+
+[github]
+user = ""
+EOF
 ```

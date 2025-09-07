@@ -1,0 +1,11 @@
+{{- $email := "" -}}
+{{- if hasKey . "email" -}}
+{{-   $email = .email -}}
+{{- else -}}
+{{-   $email = promptString "email" -}}
+{{- end -}}
+
+[data]
+    email = {{ $email | quote }}
+    espanso = {{ promptBool "espanso" }}
+    work = {{ promptBool "work" }}

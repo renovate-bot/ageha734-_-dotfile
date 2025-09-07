@@ -146,4 +146,3 @@ truncate-owner:
   after:
   # String to be appended to a name if truncated.
   marker: ""
-

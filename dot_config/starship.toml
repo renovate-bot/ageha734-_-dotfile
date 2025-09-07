@@ -1,6 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 add_newline = false
+command_timeout = 5000
 
 format = """
 $directory\
@@ -78,6 +79,16 @@ deleted = '✘\($count\)'
 commit_hash_length = 7
 tag_disabled = false
 only_detached = false
+
+[aws]
+disabled = true
+symbol = "  "
+
+[azure]
+disabled = true
+format = "on [$symbol($username)]($style) "
+symbol = "󰠅 "
+style = "blue bold"
 
 [golang]
 symbol = ""

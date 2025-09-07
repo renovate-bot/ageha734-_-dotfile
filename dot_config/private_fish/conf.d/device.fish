@@ -1,5 +1,5 @@
-function android_emulator
-    set selected_emulator (emulator -list-avds | peco --query "$LBUFFER")
+function __android_emulator
+    set selected_emulator (emulator -list-avds | fzf --query "$LBUFFER")
 
     echo "Selected Emulator: $selected_emulator"
 
@@ -11,8 +11,8 @@ function android_emulator
     end
 end
 
-function xcode_simulator
-    set selected_simulator (xcrun simctl list devices | grep -E "iPhone" | grep -v unavailable | peco --query "$LBUFFER")
+function __xcode_simulator
+    set selected_simulator (xcrun simctl list devices | grep -E "iPhone" | grep -v unavailable | fzf --query "$LBUFFER")
 
     if [ -z "$selected_simulator" ]
         echo "No simulator selected."

@@ -1,0 +1,61 @@
+npm = "bundled"
+node = "24.4.1"
+rust = "1.86.0"
+python = "3.13.7"
+terraform = "1.12.2"
+kubeconform = "0.7.0"
+commitlint = "0.10.1"
+actionlint = "1.7.7"
+lefthook = "1.12.2"
+kustomize = "5.7.1"
+terraform-docs = "0.20.0"
+tflint = "0.58.1"
+kubectl = "1.33.3"
+gcloud = "532.0.0"
+trivy = "0.64.1"
+dprint = "0.50.1"
+task = "3.44.1"
+hadolint = "2.12.0"
+go = "1.24.5"
+
+[plugins]
+actionlint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/actionlint.toml"
+commitlint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/commitlint.toml"
+dprint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/dprint.toml"
+gcloud = "github://ageha734/proto-gcloud"
+kubeconform = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubeconform.toml"
+kubectl = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubectl.toml"
+kustomize = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kustomize.toml"
+lefthook = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/lefthook.toml"
+task = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/task.toml"
+terraform-docs = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terraform-docs.toml"
+terraform = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terraform.toml"
+# terraform = "github://ageha734/proto-terraform"
+terragrunt = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terragrunt.toml"
+tflint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/tflint.toml"
+trivy = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/trivy.toml"
+
+
+[settings]
+auto-clean = true
+auto-install = true
+builtin-plugins = true
+detect-strategy = "first-available"
+telemetry = true
+
+[settings.build]
+exclude-packages = []
+install-system-packages = true
+write-log-file = false
+
+[settings.build.system-package-manager]
+
+[settings.http]
+allow-invalid-certs = false
+proxies = []
+secure-proxies = []
+
+[settings.offline]
+custom-hosts = []
+override-default-hosts = false
+timeout = 750
