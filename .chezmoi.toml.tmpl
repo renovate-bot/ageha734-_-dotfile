@@ -1,11 +1,37 @@
 {{- $email := "" -}}
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
+{{- else if env "CHEZMOI_EMAIL" -}}
+{{-   $email = env "CHEZMOI_EMAIL" -}}
+{{- else if env "CI" -}}
+{{-   $email = "github-actions[bot]@users.noreply.github.com" -}}
 {{- else -}}
 {{-   $email = promptString "email" -}}
 {{- end -}}
 
+{{- $espanso := false -}}
+{{- if hasKey . "espanso" -}}
+{{-   $espanso = .espanso -}}
+{{- else if env "CHEZMOI_ESPANSO" -}}
+{{-   $espanso = eq (env "CHEZMOI_ESPANSO") "true" -}}
+{{- else if env "CI" -}}
+{{-   $espanso = false -}}
+{{- else -}}
+{{-   $espanso = promptBool "espanso" -}}
+{{- end -}}
+
+{{- $work := false -}}
+{{- if hasKey . "work" -}}
+{{-   $work = .work -}}
+{{- else if env "CHEZMOI_WORK" -}}
+{{-   $work = eq (env "CHEZMOI_WORK") "true" -}}
+{{- else if env "CI" -}}
+{{-   $work = false -}}
+{{- else -}}
+{{-   $work = promptBool "work" -}}
+{{- end -}}
+
 [data]
     email = {{ $email | quote }}
-    espanso = {{ promptBool "espanso" }}
-    work = {{ promptBool "work" }}
+    espanso = {{ $espanso }}
+    work = {{ $work }}

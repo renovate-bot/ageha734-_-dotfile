@@ -23,15 +23,7 @@ jobs:
 
       - name: Install and initialize chezmoi
         run: |
-          sh -c "$(curl -fsLS get.chezmoi.io)" -- init https://github.com/ageha734/dotfile.git
-
-      - name: Create chezmoi config for non-interactive use
-        run: |
-          echo -e "[data]\n    email = \"github-actions[bot]@users.noreply.github.com\"\n    espanso = false" > ~/.config/chezmoi/chezmoi.toml
-
-      - name: Apply dotfiles
-        run: |
-          chezmoi apply
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/ageha734/dotfile.git
 
       - name: Install proto
         run: |
