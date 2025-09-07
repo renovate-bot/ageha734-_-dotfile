@@ -21,14 +21,30 @@ jobs:
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
-      - name: Initialize chezmoi
+      - name: Install and initialize chezmoi
         run: |
-          mkdir -p ~/.config/chezmoi
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- init https://github.com/ageha734/dotfile.git
+
+      - name: Create chezmoi config for non-interactive use
+        run: |
           echo -e "[data]\n    email = \"github-actions[bot]@users.noreply.github.com\"\n    espanso = false" > ~/.config/chezmoi/chezmoi.toml
-          sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/ageha734/dotfile.git
+
+      - name: Apply dotfiles
+        run: |
+          chezmoi apply
 
       - name: Install proto
-        run: bash <(curl -fsSL https://moonrepo.dev/install/proto.sh)
+        run: |
+          bash <(curl -fsSL https://moonrepo.dev/install/proto.sh)
+
+      - name: Create proto config
+        run: |
+          rm -f .prototools
+          cp dot_local/share/proto/dot_prototools .prototools
+
+      - name: Install tools
+        run: |
+          proto install
 
       - name: Update README with latest successful run date
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
