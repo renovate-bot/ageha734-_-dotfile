@@ -1,0 +1,269 @@
+packages:
+  darwin:
+    taps:
+      base:
+        - felixkratz/formulae
+        - nikitabobko/tap
+      personal: []
+      work: []
+
+    brews:
+      base:
+        # Core System Libraries
+        autoconf:
+        automake:
+        boost:
+        bzip2:
+        ca-certificates:
+        cairo:
+        cmake:
+        coreutils:
+        curl:
+        freetype:
+        fribidi:
+        gawk:
+        gcc:
+        gd:
+        geos:
+        gettext:
+        glib:
+        gmp:
+        gnutls:
+        gobject-introspection:
+        gsl:
+        guile:
+        harfbuzz:
+        imagemagick:
+        jpeg:
+        less:
+        libass:
+        libavif:
+        libffi:
+        libgit2:
+        libheif:
+        libiconv:
+        libidn2:
+        libsndfile:
+        libsodium:
+        libssh2:
+        libtiff:
+        libunistring:
+        libuv:
+        libyaml:
+        libzip:
+        little-cms2:
+        llvm:
+        lpeg:
+        lua:
+        luajit:
+        luarocks:
+        luv:
+        mpdecimal:
+        msgpack:
+        ncurses:
+        nss:
+        oniguruma:
+        openssl@3:
+        pango:
+        pcre2:
+        pkg-config:
+        poppler:
+        proj:
+        re2c:
+        readline:
+        sqlite:
+        srt:
+        tcl-tk:
+        tesseract:
+        tree-sitter:
+        unibilium:
+        utf8proc:
+        wangle:
+        webp:
+        wimlib:
+        x264:
+        x265:
+        xz:
+
+        # Development Tools
+        ast-grep:
+        awscli:
+        chezmoi:
+        csvq:
+        difftastic:
+        direnv:
+        docker-compose:
+        fb303:
+        fbthrift:
+        ffmpeg:
+        fizz:
+        folly:
+        git:
+        git-delta:
+        git-extras:
+        git-lfs:
+        git-secrets:
+        gnupg:
+        grip:
+        hadolint:
+        infracost:
+        jq:
+        localstack:
+        neovim:
+        openssh:
+        reattach-to-user-namespace:
+        tilt:
+        tmux:
+
+        # Shell & Terminal Tools
+        atuin:
+        bat:
+        fish:
+        fzf:
+        gh:
+        ghq:
+        lsd:
+        nowplaying-cli:
+        peco:
+        procs:
+        ripgrep:
+        starship:
+        switchaudio-osx:
+        terminal-notifier:
+        thefuck:
+        tree:
+        vivid:
+        zoxide:
+
+        # Python Dependencies
+        certifi:
+        cffi:
+        cryptography:
+        pycparser:
+        python@3.11:
+
+        # Audio/Video Processing
+        aom:
+        bdw-gc:
+        cabextract:
+        cdrtools:
+        ghostscript:
+
+      personal: []
+
+      work:
+        k9s:
+        kubectx:
+        libpq:
+        mysql-client:
+
+    casks:
+      base:
+        # Essential Apps
+        - 1password
+        - 1password-cli
+        - applite
+        - arc
+        - badgeify
+        - cleanshot
+        - cursor
+        - docker
+        - dockdoor
+        - dockey
+        - espanso
+        - ghostty
+        - google-drive
+        - google-japanese-ime
+        - homerow
+        - karabiner-elements
+        - keka
+        - meetingbar
+        - raycast
+        - ticktick
+        - warp
+
+        # Window Management & UI
+        - aerospace
+        - borders
+        - sketchybar
+
+        # Communication & Productivity
+        - discord
+        - figma
+        - obsidian
+        - streamlabs
+        - yt-music
+
+        # Development & Design Tools
+        - dataspell
+        - goland
+        - openlens
+        - postman
+
+        # Audio & Media
+        - boom-3d
+        - clockify
+        - krisp
+
+        # Nerd Fonts - Programming
+        - font-0xproto-nerd-font
+        - font-3270-nerd-font
+        - font-adwaita-mono-nerd-font
+        - font-agave-nerd-font
+        - font-arimo-nerd-font
+        - font-atkynson-mono-nerd-font
+        - font-blex-mono-nerd-font
+        - font-caskaydia-mono-nerd-font
+        - font-commit-mono-nerd-font
+        - font-cousine-nerd-font
+        - font-d2coding-nerd-font
+        - font-daddy-time-mono-nerd-font
+        - font-dejavu-sans-mono-nerd-font
+        - font-departure-mono-nerd-font
+        - font-droid-sans-mono-nerd-font
+        - font-fira-code-nerd-font
+        - font-fira-mono-nerd-font
+        - font-geist-mono-nerd-font
+        - font-go-mono-nerd-font
+        - font-gohufont-nerd-font
+        - font-hack-nerd-font
+        - font-hasklug-nerd-font
+        - font-hurmit-nerd-font
+        - font-inconsolata-go-nerd-font
+        - font-intone-mono-nerd-font
+        - font-iosevka-nerd-font
+        - font-jetbrains-mono-nerd-font
+        - font-lekton-nerd-font
+        - font-liberation-nerd-font
+        - font-lilex-nerd-font
+        - font-m+-nerd-font
+        - font-martian-mono-nerd-font
+        - font-meslo-for-powerlevel10k
+        - font-meslo-lg-nerd-font
+        - font-monaspace-nerd-font
+        - font-monofur-nerd-font
+        - font-monoid-nerd-font
+        - font-mononoki-nerd-font
+        - font-noto-nerd-font
+        - font-overpass-nerd-font
+        - font-profont-nerd-font
+        - font-recursive-mono-nerd-font
+        - font-roboto-mono-nerd-font
+        - font-sf-mono-nerd-font-ligaturized
+        - font-shure-tech-mono-nerd-font
+        - font-space-mono-nerd-font
+        - font-symbols-only-nerd-font
+        - font-tinos-nerd-font
+        - font-ubuntu-mono-nerd-font
+        - font-ubuntu-nerd-font
+        - font-udev-gothic-nf
+        - font-victor-mono-nerd-font
+        - font-zed-mono-nerd-font
+
+      personal:
+        - typora
+
+      work:
+        - aws-vault
+        - aws-vpn-client
+        - keyboard-maestro

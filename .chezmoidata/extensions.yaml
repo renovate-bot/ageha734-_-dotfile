@@ -1,0 +1,117 @@
+extensions:
+  cursor:
+    ext_ids:
+      # AI Agent
+      - google.geminicodeassist
+      - saoudrizwan.claude-dev
+
+      # Version Control & Git
+      - eamodio.gitlens
+      - donjayamanne.githistory
+      - github.vscode-github-actions
+      - github.vscode-pull-request-github
+      - mhutchie.git-graph
+      - timefly.git-flex
+      - ziyasal.vscode-open-in-github
+
+      # Linting & Formatting
+      - charliermarsh.ruff
+      - dbaeumer.vscode-eslint
+      - dprint.dprint
+      - esbenp.prettier-vscode
+      - foxundermoon.shell-format
+      - sonarsource.sonarlint-vscode
+      - stylelint.vscode-stylelint
+      - timonwong.shellcheck
+      - usernamehw.errorlens
+
+      # Language Support - Python
+      - anysphere.cursorpyright
+      - ms-python.debugpy
+      - ms-python.python
+
+      # Language Support - Go
+      - ethan-reesor.exp-vscode-go
+      - ethan-reesor.vscode-go-test-adapter
+      - furkanozalp.go-syntax
+      - golang.go
+      - r3inbowari.gomodexplorer
+
+      # Language Support - JavaScript/TypeScript
+      - bradlc.vscode-tailwindcss
+      - christian-kohler.npm-intellisense
+      - oven.bun-vscode
+
+      # Language Support - Rust
+      - rust-lang.rust-analyzer
+      - serayuzgur.crates
+      - swellaby.vscode-rust-test-adapter
+
+      # Language Support - Other
+      - hashicorp.terraform
+      - redhat.vscode-yaml
+      - tamasfe.even-better-toml
+
+      # Container & Docker
+      - anysphere.remote-containers
+      - ms-azuretools.vscode-containers
+      - ms-azuretools.vscode-docker
+      - ms-kubernetes-tools.vscode-kubernetes-tools
+      - srl-labs.vscode-containerlab
+
+      # Testing
+      - hbenl.vscode-test-explorer
+      - kavod-io.vscode-jest-test-adapter
+      - ms-playwright.playwright
+      - ms-vscode.test-adapter-converter
+      - ply-ct.vscode-ply
+      - vitest.explorer
+
+      # Markdown & Documentation
+      - bierner.markdown-mermaid
+      - davidanson.vscode-markdownlint
+      - marp-team.marp-vscode
+      - yzane.markdown-pdf
+
+      # Utilities & Productivity
+      - adpyke.codesnap
+      - editorconfig.editorconfig
+      - formulahendry.auto-rename-tag
+      - formulahendry.code-runner
+      - gieson.writetimestamp
+      - gruntfuggly.todo-tree
+      - hediet.vscode-drawio
+      - humao.rest-client
+      - ionutvmi.path-autocomplete
+      - jacobpfeifer.pfeifer-hurl
+      - janisdd.vscode-edit-csv
+      - johnpapa.vscode-peacock
+      - lokalise.i18n-ally
+      - mateuszdrewniak.hurl-runner
+      - mechatroner.rainbow-csv
+      - mikestead.dotenv
+      - mkhl.direnv
+      - mohammadbaqer.better-folding
+      - ms-vscode.live-server
+      - ms-vscode.makefile-tools
+      - naumovs.color-highlight
+      - oderwat.indent-rainbow
+      - richie5um2.vscode-sort-json
+      - streetsidesoftware.code-spell-checker
+      - wayou.vscode-todo-highlight
+      - wmaurer.change-case
+
+      # Shell & Bash
+      - jeff-hykin.better-shellscript-syntax
+      - mads-hartmann.bash-ide-vscode
+      - pinage404.bash-extension-pack
+      - rogalmic.bash-debug
+      - rpinski.shebang-snippets
+
+      # Themes & UI
+      - akamud.vscode-theme-onedark
+      - pkief.material-icon-theme
+
+      # Fun & Entertainment
+      - pixl-garden.bongocat
+      - tonybaloney.vscode-pets
