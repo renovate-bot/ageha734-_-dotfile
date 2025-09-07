@@ -1,0 +1,131 @@
+version: "3"
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  setup:
+    desc: Setup development environment
+    deps:
+      - setup:tools
+      - setup:hooks
+
+  setup:tools:
+    desc: Install development tools via proto
+    sources:
+      - .prototools
+    cmds:
+      - proto install
+    generates:
+      - ~/.proto/bin/commitlint
+      - ~/.proto/bin/lefthook
+      - ~/.proto/bin/dprint
+      - ~/.proto/bin/task
+
+  setup:hooks:
+    desc: Install git hooks
+    sources:
+      - lefthook.yml
+    cmds:
+      - lefthook install
+    status:
+      - test -f .git/hooks/pre-commit
+      - test -f .git/hooks/commit-msg
+    generates:
+      - .git/hooks/pre-commit
+      - .git/hooks/commit-msg
+
+  chezmoi:apply:
+    desc: Apply chezmoi configuration
+    cmds:
+      - chezmoi apply
+
+  chezmoi:diff:
+    desc: Show chezmoi diff
+    cmds:
+      - chezmoi diff
+
+  chezmoi:status:
+    desc: Show chezmoi status
+    cmds:
+      - chezmoi status
+
+  chezmoi:update:
+    desc: Update chezmoi from source
+    cmds:
+      - chezmoi update
+
+  lint:
+    desc: Check code formatting with dprint
+    sources:
+      - "**/*.{json,toml,yaml,yml,md}"
+      - dprint.json
+    cmds:
+      - dprint check
+
+  format:
+    desc: Format code with dprint
+    sources:
+      - "**/*.{json,toml,yaml,yml,md}"
+      - dprint.json
+    cmds:
+      - dprint fmt
+
+  git:commit:
+    desc: AI-assisted commit with automatic message generation
+    interactive: true
+    cmds:
+      - git add .
+      - |
+          # Show diff for context
+          echo "=== Changes to be committed ==="
+          git diff --cached --stat
+          echo ""
+
+          # Generate commit message based on changes
+          if git diff --cached --name-only | grep -q "\.md$"; then
+            TYPE="docs"
+          elif git diff --cached --name-only | grep -q "Taskfile\|\.ya?ml$\|\.toml$"; then
+            TYPE="chore"
+          elif git diff --cached --name-only | grep -q "\.fish$\|\.sh$"; then
+            TYPE="feat"
+          else
+            TYPE="feat"
+          fi
+
+          # Get changed files for description
+          CHANGED_FILES=$(git diff --cached --name-only | head -3 | xargs basename -s .yml -s .yaml -s .toml -s .md -s .fish | tr '\n' ', ' | sed 's/,$//')
+
+          # Create commit message
+          COMMIT_MSG="$TYPE: update $CHANGED_FILES"
+
+          echo "Generated commit message: $COMMIT_MSG"
+          echo ""
+
+          # Commit with generated message
+          git commit -m "$COMMIT_MSG"
+
+  git:log:
+    desc: Show git log
+    cmds:
+      - git log --graph --oneline --all --decorate --date=short --abbrev-commit --pretty=format:'%Cblue%ad %C(auto)%h%Creset -%C(auto)%d%Creset %s %Cblue[%aN]%Creset %Cblue%G?%Creset'
+
+  git:rm:his:
+    desc: Remove history of a commit
+    cmds:
+      - git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch {{.CLI_ARG}}' -- --all
+
+  clean:
+    desc: Clean up temporary files
+    cmds:
+      - rm -rf .task/
+      - git clean -fd
+
+  update:
+    desc: Update all tools and dependencies
+    cmds:
+      - proto outdated
+      - proto upgrade
+      - chezmoi upgrade

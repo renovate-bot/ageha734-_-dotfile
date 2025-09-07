@@ -3,8 +3,10 @@ proto = "0.51.4"
 commitlint = "0.10.1"
 lefthook = "1.12.2"
 dprint = "0.50.1"
+task = "3.44.1"
 
 [plugins]
 commitlint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/commitlint.toml"
 lefthook = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/lefthook.toml"
 dprint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/dprint.toml"
+task = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/task.toml"
